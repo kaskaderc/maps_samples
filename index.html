@@ -5,16 +5,46 @@
     <title> 
       A page with some Google Maps V3 API samples
     </title> 
+    <style type="text/css"> 
+      body {
+        color: #585858;
+        font-family: sans-serif;
+      }
+      a {
+        color: red;
+      }
+      #header {
+        font-size: 300%;
+        text-align:right;
+        border: 1px solid red;
+        padding: 20px 20px 20px 80px;
+        margin: 20px 10px 20px 10px;      
+      }      
+      #list{
+        margin: 20px 10px 20px 10px;
+        padding: 20px 20px 20px 80px;
+        border: 1px solid green;     
+      }
+    </style>  
+  </head>    
   <body> 
+  
+   <div id="header">
+   kaskader(c) Map samples
+   </div>
+   
+   <div id="list">
    These are some Google Maps API V3 samples that were created while working with the API:
-   <ul>
+    <ul>
     <li>
-        <a href="map_events.html"> Map events demo </a> : lists all the events that can be triggered for the
-        <code> google.maps.Map </code>  object and shows when that happens, by highlighting the event name.
+        <a href="map_events.html"> Map events demo </a>  <br> lists all the events that can be triggered for the
+        <code> google.maps.Map </code>  object and shows when that happens, by highlighting the event name. <br>
+        You can also have a look at the step by step build up of this sample: <a href="tutorial_map_events"> Step by step </a> 
     </li>
     <!-- <li>
         <a href="get_country.html"> Getting the country the map is centered on </a> 
     </li> -->
-   </ul>
+   </ul>   
+   </div>          
   </body> 
 </html> 
