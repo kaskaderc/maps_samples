@@ -1,0 +1,58 @@
+
+<!doctype html>
+<html>
+  <head>
+    <script type="text/javascript"
+        src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=weather"></script>
+    <style type="text/css">
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+    }
+
+    #map {
+      width: 640px;
+      height: 480px;
+    }
+
+    .options {
+      overflow: hidden;
+      margin: 10px 0 10px 0;
+    }
+
+    .option {
+      float: left;
+      width: 210px;
+    }
+
+    .heading {
+      font-weight: bold;
+    }
+    </style>
+    <script>
+      var map, weatherLayer, cloudLayer;
+
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(52.00838,18.59333),
+          zoom: 6,
+          mapTypeId: google.maps.MapTypeId.HYBRID,
+        });
+
+        weatherLayer = new google.maps.weather.WeatherLayer({
+          temperatureUnits: google.maps.weather.TemperatureUnit.CELSIUS,
+      windSpeedUnits: google.maps.weather.WindSpeedUnit.KILOMETERS_PER_HOUR
+        });
+        weatherLayer.setMap(map);
+
+        cloudLayer = new google.maps.weather.CloudLayer();
+        cloudLayer.setMap(map);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="header"> <h1>Weather Layer in the Google Maps API </h1> </div>	
+    <div id="map"></div> 
+  </body>
+</html>
