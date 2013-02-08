@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Directions</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <link href='https://fonts.googleapis.com/css?family=Londrina+Sketch' rel='stylesheet'
+      type='text/css'>
+    <style type="text/css">
+      html, body, #map_canvas {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="maplabel.js"></script>
+    <script type="text/javascript">
+      var map, drivingLabel, bicyclingLabel;
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('map_canvas'), {
+          zoom: 14,
+          center: new google.maps.LatLng(37.7921, -122.4157),
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          disableDefaultUI: true
+        });
+
+        doRequest(google.maps.TravelMode.WALKING, [{
+          icon: {
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+            fillColor: 'green',
+            strokeColor: 'white',
+            strokeOpacity: 1,
+            strokeWeight: 1,
+            fillOpacity: 1,
+            scale: 4
+          },
+          offset: '0',
+          repeat: '25px'
+        }]);
+        doRequest(google.maps.TravelMode.DRIVING, [{
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'red',
+            strokeColor: 'white',
+            strokeOpacity: 1,
+            strokeWeight: 1,
+            fillOpacity: 0.5,
+            scale: 6
+          },
+          offset: '0',
+          repeat: '22px'
+        }]);
+
+        drivingLabel = new MapLabel({
+          position: new google.maps.LatLng(43.765949,11.251821),
+          text: 'Driving',
+          fontFamily: '\'Londrina Sketch\', sans-serif',
+          fontSize: 48,
+          fontColor: 'red',
+          align: 'right',
+          map: map
+        });
+        bicyclingLabel = new MapLabel({
+          position: new google.maps.LatLng(43.769017,11.242594),
+          text: 'Walking',
+          fontColor: 'Green',
+          fontFamily: '\'Londrina Sketch\', sans-serif',
+          fontSize: 48,
+          align: 'left',
+          map: map
+        });
+
+        // HACK: Keep repainting the labels because they sometimes don't show
+        // up, as we are using a Google Web Font.
+        window.setInterval(function() {
+          drivingLabel.notify('text');
+          bicyclingLabel.notify('text');
+        }, 1000);
+      }
+
+      function doRequest(travelMode, icons) {
+        var service = new google.maps.DirectionsService;
+        var request = {
+          origin: 'Via dei Serragli, Florence, Italy',
+          destination: 'Florence, Italy',
+          travelMode: travelMode
+        };
+        service.route(request, function(result, status) {
+          if (status != google.maps.DirectionsStatus.OK) {
+            window.console.log('Error: ' + status);
+            return;
+          }
+
+          var renderer = new google.maps.DirectionsRenderer({
+            map: map,
+            suppressMarkers: true,
+            suppressBicyclingLayer: true,
+            polylineOptions: {
+              strokeOpacity: 0,
+              icons: icons
+            }
+          });
+          renderer.setDirections(result);
+        });
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map_canvas"></div>
+  </body>
+</html>

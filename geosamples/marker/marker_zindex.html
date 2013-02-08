@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Simple Icons</title>
+    <style rel="stylesheet">
+    html, body {
+  height: 600px;
+  margin: 0;
+  padding: 0;
+}
+
+#map_canvas {
+  height: 100%;
+}
+
+@media print {
+  html, body {
+    height: auto;
+  }
+
+  #map_canvas {
+    height: 650px;
+  }
+}
+</style>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+  function initialize() {
+    var opts = {};
+
+    opts['center'] = new google.maps.LatLng(-34.397, 150.644);
+    opts['zoom'] = 8;
+    opts['mapTypeId'] = 'roadmap';
+    var map = new google.maps.Map(document.getElementById("map"), opts);
+
+    setMarkers(map, beaches);
+  }
+
+  /**
+   * Data for the markers
+   */
+  var beaches = [
+    ['Avalon Beach, New South Wales', -33.636325, 151.330596],
+    ['Bells Beach, Torquay, Victoria', -38.363149, 144.286794],
+    ['Bondi Beach, New South Wales', -33.890542, 151.274856, 4],
+    ['Byron Bay, New South Wales', -28.643387, 153.612224],
+    ['Cable Beach, Western Australia', -17.928991, 122.210385],
+    ['Cactus Beach', -32.085461, 132.980983],
+    ['Casuarina Beach, Australia', -12.3549, 130.873352],
+    ['Clifton Beach, Australia', -42.98954, 147.521516],
+    ['Coogee Beach, New South Wales', -33.923036, 151.259052, 5],
+    ['Cottesloe Beach, Cottesloe, Western Australia', -31.995599, 115.750495],
+    ['Cronulla Beach, New South Wales', -34.028249, 151.157507, 3],
+    ['Manly Beach, New South Wales', -33.80010128657071, 151.28747820854187, 2],
+    ['Margaret River, Western Australia', -33.95103, 115.073828],
+    ['Maroubra Beach, New South Wales', -33.950198, 151.259302, 1],
+    ['Ninety Mile Beach', -35.013813, 173.157176],
+    ['Noosa Heads, Queensland', -26.396175, 153.089397],
+    ['Rainbow Beach, Queensland', -25.902126, 153.092178],
+    ['Scarborough Beach, Australia', -34.27458, 150.959348],
+    ['St Kilda Beach', -34.738078, 138.532282],
+    ['Surfers\' Paradise, Gold Coast, Queensland', -28.00228, 153.431052],
+    ['Wineglass Bay, Australia', -42.154663, 148.292699]
+  ];
+
+  function setMarkers(map, points) {
+    // Add markers to the map
+    var image = {
+      url: 'beachflag.png',
+      size: new google.maps.Size(20, 32),
+      origin: new google.maps.Point(0,0),
+      anchor: new google.maps.Point(0, 32)
+    };
+    var shadow = {
+      url: 'beachflag_shadow.png',
+      size: new google.maps.Size(37, 32),
+      origin: new google.maps.Point(0,0),
+      anchor: new google.maps.Point(0, 32)
+    };
+    var shape = {
+      coord: [1, 1, 1, 20, 18, 20, 18 , 1],
+      type: 'poly'
+    };
+    for (var i = 0; i < points.length; i++) {
+      var point = points[i];
+      var marker =
+          new google.maps.Marker(
+              {
+                position: new google.maps.LatLng(point[1], point[2]),
+                map: map,
+                title: point[0],
+                zIndex: point[3]
+              });
+      google.maps.event.addListener(marker, 'mouseover', function() {
+        this.setFlat(true);
+      });
+      google.maps.event.addListener(marker, 'mouseout', function() {
+        this.setFlat(false);
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        alert(this.getTitle());
+      });
+    }
+
+    // Set a marker using sprite
+    var spriteMarker =
+        new google.maps.Marker(
+            {
+              position: map.getCenter(),
+              map: map,
+              clickable: false,
+              icon: {
+                url: 'icont.png',
+                size: new google.maps.Size(32, 32),
+                origin: new google.maps.Point(160, 64),
+                anchor: new google.maps.Point(8, 31)
+              }
+            });
+
+    var urlMarker = new google.maps.Marker(
+        { map: map,
+          position: new google.maps.LatLng(-34.3, 150.6),
+          icon: 'http://labs.google.com/ridefinder/images/mm_20_yellow.png'});
+    google.maps.event.addListener(urlMarker, 'click', function(event) {
+      if (window.console && window.console.log) {
+        window.console.log('yellow marker clicked', event);
+      }
+    });
+
+    // A Google maps default marker
+    new google.maps.Marker({
+      map: map,
+      position: new google.maps.LatLng(-34.4, 150.6)
+    });
+  }
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map" style="width: 320px; height: 480px;">map div</div>
+  <div>
+    <input type="button" value="KV Stats" onclick="displayKVStats()">
+    <input type="button" value="KV Reset" onclick="resetKVStats()">
+    <div id="kvstats"></div>
+  </div>
+</body>
+</html>

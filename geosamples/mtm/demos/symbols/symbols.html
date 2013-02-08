@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Symbols</title>
+<style type="text/css">
+  html, body, #map_canvas {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+</style>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="blank_map_type.js"></script>
+<script type="text/javascript">
+  var map, polys = [];
+  function initialize() {
+    var myOptions = {
+      zoom: 3,
+      center: new google.maps.LatLng(0, 0),
+      disableDefaultUI: true,
+      mapTypeId: 'blank'
+    };
+    map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+    map.mapTypes.set('blank', new BlankMapType);
+
+    polys.push(new google.maps.Polyline({
+      path: [
+        new google.maps.LatLng(0, -40),
+        new google.maps.LatLng(0, 40)
+      ],
+      strokeOpacity: 0.25,
+      strokeWeight: 5,
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          strokeOpacity: 1,
+          strokeWeight: 2.5,
+          fillOpacity: 1,
+          scale: 10
+        },
+        repeat: '25%'
+      }],
+      map: map
+    }));
+
+    polys.push(new google.maps.Polyline({
+      path: [
+        new google.maps.LatLng(15, -40),
+        new google.maps.LatLng(15, 40)
+      ],
+      strokeOpacity: 0.25,
+      strokeWeight: 5,
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          strokeOpacity: 1,
+          strokeWeight: 2.5,
+          fillOpacity: 1
+        },
+        repeat: '25%'
+      }],
+      map: map
+    }));
+
+    polys.push(new google.maps.Polyline({
+      path: [
+        new google.maps.LatLng(28, -40),
+        new google.maps.LatLng(28, 40)
+      ],
+      strokeOpacity: 0.25,
+      strokeWeight: 5,
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+          strokeOpacity: 1
+        },
+        repeat: '25%'
+      }],
+      map: map
+    }));
+
+    polys.push(new google.maps.Polyline({
+      path: [
+        new google.maps.LatLng(-15, -40),
+        new google.maps.LatLng(-15, 40)
+      ],
+      strokeOpacity: 0.25,
+      strokeWeight: 5,
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+          strokeOpacity: 1,
+          strokeWeight: 2.5,
+          fillOpacity: 1
+        },
+        repeat: '25%'
+      }],
+      map: map
+    }));
+
+    polys.push(new google.maps.Polyline({
+      path: [
+        new google.maps.LatLng(-28, -40),
+        new google.maps.LatLng(-28, 40)
+      ],
+      strokeOpacity: 0.25,
+      strokeWeight: 5,
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.BACKWARD_OPEN_ARROW,
+          strokeOpacity: 1
+        },
+        repeat: '25%'
+      }],
+      map: map
+    }));
+
+    window.setInterval(function() {
+      for (var i = 0; i < polys.length; ++i) {
+        setRandomStyle(polys[i]);
+      }
+    }, 1000);
+  }
+
+  var colors = [
+    '#DC143C',
+    '#FF8C00',
+    '#556B2F',
+    '#2F4F4F',
+    '#4B0082',
+    '#FFE4B5',
+    '#2E8B57',
+    '#008080',
+    '#9ACD32',
+    '#000000'
+  ];
+
+  function getRandomColor() {
+    var index = Math.floor(Math.random() * colors.length);
+    return colors[index];
+  }
+
+  function getRandomOpacity() {
+    return Math.random() * 0.5 + 0.5;
+  }
+
+  function setRandomStyle(poly) {
+    var icons = poly.get('icons');
+    icons[0].icon.strokeColor = getRandomColor();
+    icons[0].icon.strokeOpacity = getRandomOpacity();
+    icons[0].icon.fillColor = getRandomColor();
+    if (icons[0].icon.fillOpacity != null) {
+      icons[0].icon.fillOpacity = getRandomOpacity();
+    }
+    poly.notify('icons');
+  }
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas"></div>
+</body>
+</html>

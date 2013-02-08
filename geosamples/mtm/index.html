@@ -1,0 +1,263 @@
+<!--
+Google IO 2012 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>New features of Google Maps API JS v32</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  <script data-main="js/slides" src="js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+<slides class="layout-widescreen">
+
+  <slide class="logoslide nobackground">
+    <article class="flexbox vcenter">
+      <span><img src="images/google_developers_logo.png"></span>
+    </article>
+  </slide>
+
+  <slide class="title-slide segue nobackground">
+    <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h1 data-config-title></h1>
+      <h2 data-config-subtitle></h2>
+      <p data-config-presenter></p>
+    </hgroup>
+   </slide>
+
+   <slide>
+    <hgroup>
+      <h2> Marker </h2>
+    </hgroup>
+    <article>
+      <iframe style="height: 500px" data-src="demos/marker/single.html"></iframe>
+    </article>
+  </slide>
+  <!-- 80% map caly czas tak wyglada , ale swiat sie zmienia-->
+
+   <slide>
+    <hgroup>
+      <h2>Geo tagowanie</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Zdjec</li>
+        <li>Postow</li>
+        <li>Check-inow</li>
+        <li>...</li>
+      </ul>
+    </article>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h1> Dane mowia same za siebie: heatmaps </h1>
+    </hgroup>
+    <article class="flexbox vcenter">
+      <img height="450px" src="images/heatface.jpg">
+    </article>
+    <footer class="source">A colourful depth map of the average of 500 faces by <a href="http://www.flickr.com/photos/chetbox/4665402347/">chetbox</a> </footer>
+  </slide>
+
+
+  <slide>
+      <iframe style="height: 100%" data-src="http://www-users.mat.umk.pl/~kaskader/radar.html"></iframe>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2> Symbole pozwalaja zrozumiec skomplikowane zbiory danych w mgnieniu oka  </h2>
+    </hgroup>
+    <article>
+      <a href="http://goo.gl/G6ijA">
+        <img style="height: 100%" src="images/airports-size.png"></img>
+      </a>
+    </article>
+  </slide>
+
+  
+
+  <slide>
+    <hgroup>
+      <h2> Fromularze same sie wypelniaja</h2>
+    </hgroup>
+    <article  class="flexbox vcenter">
+      <iframe style="height: 400px; width:500px" data-src="demos/places/autocomplete_addressform.html"></iframe>
+    </article>
+  </slide>
+
+
+   <slide>
+     <hgroup>
+      <h2> Zagadki i ciekawe podejscie do chodzenia </h2>
+    </hgroup>
+    <article>
+      <iframe data-src="demos/directions/directions2.html"></iframe>
+    </article>
+  </slide>
+
+    <slide>
+    <hgroup>
+      <h2>Pozwol innym znalezc siebie!</h2>
+    </hgroup>
+     <iframe style="height: 500px"  src="demos/streetview/steetview.html"></iframe>
+  </slide>
+
+
+ <slide>
+    <hgroup>
+      <h2><a href="http://www.morethanamap.com/"> morethanamap.com </a></h2>
+    </hgroup>
+    <article>
+      <a href="http://www.morethanamap.com/">
+       <img style="height: 500px" src="images/mtm_main.png"></img>
+      </a>
+    </article>
+  </slide>
+
+ <!--
+        http://www.morethanamap.com/demos/basemaps/sydney
+
+http://www.morethanamap.com/demos/satellite/krakow-poland
+http://www.morethanamap.com/demos/streetview/underwater
+
+-->
+  <slide>
+    <hgroup>
+      Zrodla inpiracji
+    </hgroup>
+    <article>
+      <ul class="build">
+       <li> <a href="https://developers.google.com/showcase/#tags=maps"> Showcase </a></li>
+       <li> <a href="https://plus.google.com/+GoogleMapsAPI/posts"> +GoogleMapsAPI </a> </li>
+      </ul>
+    </article>
+  </slide>
+
+
+
+
+
+
+  <slide>
+    <hgroup>
+      <h2>Recap</h2>
+    </hgroup>
+    <article>
+      <ul class="build">
+        <li>Styled maps</li>
+        <li>Places api i autocomplete</li>
+        <li>Heatmaps</li>
+        <li>Symbole</li>
+      </ul>
+    </article>
+  </slide>
+
+
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2>What's new ?</h2>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2> Time Zone API</h2>
+    </hgroup>
+    <article>
+      <div class="build">
+        <pre class="prettyprint" data-lang="endpoint">
+          <b>https://</b>maps.googleapis.com/maps/api/timezone/json
+        </pre>
+        <pre  class="prettyprint" data-lang="params">
+         <b>location=39.6034810,-119.6822510</b>&<b>timestamp=1331161200</b>&sensor=false
+        </pre>
+        <pre class="prettyprint" data-lang="json">
+{
+   "dstOffset" : 3600.0,
+   "rawOffset" : -28800.0,
+   "status" : "OK",
+   "timeZoneId" : "America/Los_Angeles",
+   "timeZoneName" : "Pacific Daylight Time"
+}
+        </pre>
+     </div>
+    </article>
+  </slide>
+
+   <slide>
+    <hgroup>
+      <h2> M4B: Google Maps Tracks and Geolocation API</h2>
+    </hgroup>
+    <article>
+      <div class="build">
+        <div> <p> <a href="http://goo.gl/2UPPX">Tracks API </a> <p> </p>designed to help businesses track, analyze, and visualize asset movement. </p> 
+        <p> Uses the concept of <code> entities</code>, </code>collections (of entities)</code>, recording <code>crumbs</code> and <code>geofencing</code> to track and manage geo assets.</p>
+        </div>
+        <div>
+        <p> <a href="http://goo.gl/8Mm1E">Geolocation API</a> </p> <p>location information based on  cell towers and WiFi nodes that the mobile client can detect.</p>
+        <pre class="prettyprint">
+   "cellId": 42,
+  "locationAreaCode": 415,
+  "mobileCountryCode": 310,
+  "mobileNetworkCode": 410,
+  "signalStrength": -60 </pre>
+        </div>
+     </div>
+    </article>
+  </slide>
+
+  <slide class="segue dark nobackground">
+    <aside class="gdbar"><img src="images/google_developers_icon_128.png"></aside>
+    <hgroup class="auto-fadein">
+      <h2> Be the first to know! </h2>
+      <h3><a href="https://plus.google.com/+GoogleMapsAPI/posts"> +GoogleMapsAPI </a></h3>
+    </hgroup>
+  </slide>
+
+  <slide class="thank-you-slide segue nobackground">
+    <aside class="gdbar right"><img src="images/google_developers_icon_128.png"></aside>
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+      <p> it's <a style="color:white;" href="http://www.morethanamap.com/demos"><b>morethanamap.com</b></a></p>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

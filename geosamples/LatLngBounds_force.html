@@ -1,0 +1,59 @@
+
+<html>
+<head>
+ <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+ <script src="rectangleoverlay.js"></script>
+<script>
+  var map, rect;
+  function initialize() {
+    map = new google.maps.Map(document.getElementById("map"),
+                              { mapTypeId: google.maps.MapTypeId.ROADMAP,
+    zoom: 8,
+          center: new google.maps.LatLng(-34.397, 150.644) });
+    rect = new RectangleOverlay({map: map});
+    setBounds(1);
+  }
+
+  function setBounds(index) {
+    var rectBounds;
+    if (index == 1) {
+      rectBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(-34, 149),
+          new google.maps.LatLng(-33, 152));
+    } else if (index == 2) {
+      rectBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(-33, 149),
+          new google.maps.LatLng(-34, 152));
+    } else if (index == 3) {
+      rectBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(15, -157),
+          new google.maps.LatLng(60, -54));
+    } else if (index == 4) {
+      rectBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(60, -54),
+          new google.maps.LatLng(15, -157));
+    } else if (index == 5) {
+      // Cross the international dateline.
+      rectBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(-40, 145),
+          new google.maps.LatLng(40, -120));
+    }
+    map.fitBounds(rectBounds);
+    map.setZoom(map.getZoom()+1);
+    rect.set('bounds', rectBounds);
+  }
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map" style="width: 800px; height: 480px;">map div</div>
+  <div>
+    <input type="button" value="Bounds 1" onclick="setBounds(1)">
+    <input type="button" value="Bounds 2" onclick="setBounds(2)">
+    <input type="button" value="Bounds 3" onclick="setBounds(3)">
+    <input type="button" value="Bounds 4" onclick="setBounds(4)">
+    <input type="button" value="Bounds 5" onclick="setBounds(5)">
+  </div>
+
+</body>
+</html>
+

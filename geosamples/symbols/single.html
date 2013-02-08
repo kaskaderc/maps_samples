@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps JavaScript API v3 Example: Map Simple</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <style type="text/css">
+      html, body, #map_canvas {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+      var map;
+      function initialize() {
+        var myLatlng = new google.maps.LatLng(53.012,18.589);
+        var zurich = new google.maps.LatLng(47.367432,8.539759);
+        var mapOptions = {
+          zoom: 11,
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+        }
+       var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+       var path_star = 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z';
+       var path_star1 = 'M -50,5 -25,90 -45,90 17,145 200,230 125,180 50,230 75,145 5,90 95,90 z';
+       var path_triange = 'M150 0 L75 200 L225 200 Z';
+       var path_creature= 'm16.2471,46.46457l-0.13947,-26.33734c-0.02933,-5.53818 4.88126,-13.66217 16.03922,-13.64139c10.87958,0.02026 15.52966,8.88547 17.99176,20.25949l-7.6709,0l0,13.37128c0,3.24152 -3.48724,6.67654 -7.53146,6.6181l-18.68915,-0.27014z';
+   // 'm 249.50768,527.08286 -1.01015,-196.97975 c -0.21241,-41.42075 35.35345,-102.18078 116.16754,-102.0254 78.79785,0.1515 112.47733,66.4553 130.30968,151.52288 l -55.55839,-1e-5 0,100.00511 c 0,24.24366 -25.25708,49.93465 -54.54824,49.49747 z';
+       var path_hill = 'M 100 350 q 150 -300 300 0';
+
+var goldStar = {
+  path: path_star,
+  fillColor: "#AAAAFF",
+  fillOpacity: 0.8,
+  scale: 1,
+  strokeColor: "gold",
+  strokeWeight: 7
+};
+var creature = {
+  path: path_creature,
+  fillColor: "#6199DF",
+  fillOpacity: 0.8,
+  scale: 1,
+  strokeColor: "gold",
+  strokeWeight: 4
+};
+ var creature_hover = {
+  path: path_creature,
+  fillColor: "#6199DF",
+  fillOpacity: 1,
+  scale: 2,
+  strokeColor: "gold",
+  strokeWeight: 6
+};
+
+
+
+
+
+        var z = new google.maps.Marker({
+          position: zurich,
+          icon: goldStar,
+          draggable: true
+        });
+        z.setMap(map);
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          icon: creature
+        });
+
+        google.maps.event.addListener(marker, 'mouseover', function() {
+          marker.setIcon(creature_hover);
+        });
+        // To add the marker to the map, call setMap();
+        marker.setMap(map);
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map_canvas"></div>
+  </body>
+</html>

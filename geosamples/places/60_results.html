@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Place Search</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places&v=3.10"></script>
+
+    <style>
+      #map {
+        height: 400px;
+        width: 600px;
+        border: 1px solid #333;
+        margin-top: 0.6em;
+      }
+    </style>
+
+    <script>
+      var map;
+      var service;
+      var resultList= [];
+
+      var pagination;
+
+      function initialize() {
+        var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: pyrmont,
+            zoom: 10
+          });
+
+        var request = {
+          location: pyrmont,
+          radius: '5000',
+          types: ['store']
+        };
+
+        service = new google.maps.places.PlacesService(map);
+
+        service.nearbySearch(request, callback);
+      }
+
+      function callback(results,status,p) {
+          pagination = p;
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+                }
+                if (pagination && pagination.hasNextPage) {
+                  setTimeout('pagination.nextPage()',2000);
+                }
+            }
+          }
+
+         function createMarker(place) {
+                  var placeLoc = place.geometry.location;
+                  var marker = new google.maps.Marker({map: map,zIndex: 100,position: place.geometry.location});
+                  $('#placesdata').append('<tr><td>' + place.name+ '</td></tr>');
+          };
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="placesdata"> </div>
+  </body>
+</html>

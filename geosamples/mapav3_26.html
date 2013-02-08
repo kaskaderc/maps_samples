@@ -1,0 +1,57 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">     
+<head>
+	<title>Mapa de establecimientos - Travel Club.</title>
+	<!-- Metadatos de contenidos de la web -->
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+	<!-- Metadatos para los buscadores -->
+	<meta name="description" content="..." />
+	<meta name="keywords" content="..." />
+	<meta name="language" content="es" />
+	
+
+	<!-- Icono en la barra de la URL -->
+	 <link rel="shortcut icon" href="favicon.ico" />
+	 
+    
+    <script type="text/javascript" src="https://maps-api-ssl.google.com/maps/api/js?v=3&sensor=false"></script>
+
+
+    <script language="javascript" type="text/javascript">
+
+	var map;
+	var geocoder;
+	var zoom;
+	var tPatrocinador;
+	
+		
+	function initialize() {
+		
+		var PuntoCero = new google.maps.LatLng(40.396764,-3.713379);
+		var mapOptions = {
+  			zoom: 5,
+  			center: PuntoCero,
+  			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+		
+		var map = new google.maps.Map(document.getElementById("mapa"), mapOptions);
+
+		tPatrocinador = new google.maps.KmlLayer('http://www.travelclub.es/GoogleMaps/kml/A39_GENERICO_16.kmz?random=0.735942278705', {preserveViewport:true}); 
+		tPatrocinador.setMap(map);
+								
+	}
+		
+	</script>
+</head>
+
+<body onload="initialize()">
+
+	<div id="mapa" style="width:742px; height:404px; border:solid 1px #DDDDDD;"><center><img style="margin-top:180px;" src="images/ajaxloaderbig.gif" align="absmiddle" /></center></div>
+
+</body>
+
+</html>
+
+

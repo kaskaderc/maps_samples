@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Street View Layer</title>
+    <link href="default.css" rel="stylesheet">
+    <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+
+      function initialize() {
+        var meridien = new google.maps.LatLng(52.2421051, 21.015775099999928);
+        var mapStyle = [
+    {
+      stylers: [
+      {saturation: -100},
+      ]
+    },{
+      featureType: 'water',
+      elementType: 'geometry',
+      stylers: [
+      { lightness: -30 }
+      ]
+    },{
+      featureType: 'water',
+      elementType: 'labels',
+      stylers: [
+      { invert_lightness: true },
+      { lightness: 30 }
+      ]
+    },{
+      featureType: 'road',
+      stylers: [
+      { lightness: 25 }
+      ]
+    },{
+      featureType: 'poi.park',
+      elementType: 'geometry',
+      stylers: [
+      { lightness: 20 }
+      ]
+    }
+  ];
+        var mapOptions = {
+          center: meridien,
+          zoom: 16,
+          styles: mapStyle,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(
+            document.getElementById('map_canvas'), mapOptions);
+        var panoramaOptions = {
+          position: meridien,
+          pov: {
+            heading: -30,
+            pitch: 0,
+            zoom: 0
+          }
+        };
+        //13,61.67,,0,0.05
+        var panorama = new  google.maps.StreetViewPanorama(document.getElementById('pano'),panoramaOptions);
+        map.setStreetView(panorama);
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas" style="margin: 30px; width: 200px; height: 300px; floaf: left"></div>
+    <div id="pano" style="margin-top: 30px; position:absolute; left:250px; top: 0px; width: 600px; height: 400px;"></div>
+  </body>
+</html>

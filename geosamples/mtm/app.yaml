@@ -1,0 +1,30 @@
+application: devfestmtm
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /
+  static_files: index.html
+  upload: index\.html
+
+- url: /google916b48c9957547c5\.html
+  static_files: google916b48c9957547c5.html
+  upload: google916b48c9957547c5\.html
+
+- url: /slide_config\.js
+  static_files: slide_config.js
+  upload: slide_config\.js
+
+- url: /demos
+  static_dir: demos
+
+- url: /js
+  static_dir: js
+
+- url: /theme
+  static_dir: theme
+
+- url: /images
+  static_dir: images

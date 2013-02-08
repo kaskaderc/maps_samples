@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Polyline Simple</title>
+    <style>
+      html, body {
+	    height: 100%;
+	    margin: 0;
+	    padding: 0;
+	  }
+
+     #map_canvas {
+	  height: 100%;
+	 }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=geometry"></script>
+    <script>
+      function initialize() {
+        var myLatLng = new google.maps.LatLng(53.01199478424665,18.61410140991211);
+        var mapOptions = {
+          zoom: 14,
+          center: myLatLng,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+
+        var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+        var flightPlanCoordinates = [
+            new google.maps.LatLng(53.01199478424665,18.61410140991211),
+            new google.maps.LatLng(53.01209806381578,18.608779907226562),
+            new google.maps.LatLng(53.0132341227632,18.610668182373047)
+        ];
+        var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
+
+        var path = flightPath.getPath();
+        var distance = 0;
+        for (var i=0; i<path.getLength()-1;i++){ 
+          distance += google.maps.geometry.spherical.computeDistanceBetween(path.getAt(i), path.getAt(i+1));
+        }
+        console.log(distance);
+        //google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
+        
+      }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas"></div>
+  </body>
+</html>
+

@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps JavaScript API v3 Example: Map Simple</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <style type="text/css">
+      html, body, #map_canvas {
+        margin: 0;
+        padding: 0;
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
+    <script type="text/javascript">
+      var map;
+      function initialize() {
+        var myLatlng = new google.maps.LatLng(53.012,18.589);
+        var mapOptions = {
+          zoom: 15,
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+        }
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+        // To add the marker to the map, call setMap();
+
+    marker = new google.maps.Marker({
+      map: map,
+      position: myLatlng,
+      draggable: true,
+      title: 'Drag me!'
+    });
+    marker.setMap(map);
+    google.maps.event.addListener(marker, 'drag', function() {
+      circle.setCenter(marker.getPosition());
+    });
+
+    circle = new google.maps.Circle({map: map,
+                                     radius: 3 * 1000});  // 3000 km
+    circle.bindTo('center', marker, 'position');
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map_canvas"></div>
+  </body>
+</html>
