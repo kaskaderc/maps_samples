@@ -1,0 +1,60 @@
+<html>
+<head>
+<script src="ne_10m_populated_places.json"> </script>
+<script type="text/javascript" 
+src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=visualization"></script>
+<script src="https://raw.github.com/JasonSanford/GeoJSON-to-Google-Maps/master/GeoJSON.js"></script>
+<script>
+  var map;
+  var hmd = [];
+  function initialize() {
+    map = new google.maps.Map(document.getElementById("map"));
+    map.setCenter(new google.maps.LatLng(30, 30));
+    map.setZoom(2);
+    map.setMapTypeId('roadmap');
+    var googleOptions = {
+      strokeColor: "#FFFF00",
+      strokeWeight: 7,
+      strokeOpacity: 0.75
+    };
+
+    var googleVector = new GeoJSON(polys, googleOptions);
+    addVector(googleVector);
+
+   var hm = new google.maps.visualization.HeatmapLayer({
+     data: hmd,
+     dissipating: true
+   });
+   hm.setMap(map);
+};
+
+function addVector(googleVector){
+  if(!googleVector.length) {
+    googleVector.setMap(map);
+  } else {
+    for(var idx in googleVector) {
+      if(typeof googleVector[idx].setMap === 'function') {
+        if ( googleVector[idx].position ) {
+          hmd.push({location: googleVector[idx].position, weight: googleVector[idx].geojsonProperties.SCALERANK});  
+        }
+        //googleVector[idx].setMap(map);
+        //add a listener
+        //google.maps.event.addListener(googleVector[idx],"mouseover",
+        //  function(pme) {
+        //    document.getElementById("info").innerHTML = this.geojsonProperties.name ;
+        //   });
+      } else {
+        addVector(googleVector[idx]);
+      }
+    }
+  }
+}
+
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map" style="width: 80%;height: 80%;">map div</div>
+  <div id="info" style="width: 100%, height:20%"> </div>
+</body>
+</html>
+
