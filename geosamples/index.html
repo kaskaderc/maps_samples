@@ -60,123 +60,42 @@
     </script>
   </head>
   <body>
+    <h1> Playing with shp files is not that hard </h1>
+    <h2> 1. Getting started </h2>
     <div>
-     <div id="show_code" class="button" onclick="switchPreview()"> Toggle code snippets </div>
-     <div id="places">
-       <h1> Places API library </h1>
-        <div id="places_samples">
-          <div id="60_results">
-            <a href="places/60_results.html"> Getting 60 results from places API using JS library </a>
-            <pre id="60_results_code" class="nosee">
-            function callback(results,status,p) {
-                pagination = p;
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  for (var i = 0; i &lt; results.length; i++) {
-                      createMarker(results[i]);
-                      }
-                      if (pagination && pagination.hasNextPage) {
-                        setTimeout('pagination.nextPage()',2000);
-                      }
-                  }
-                }
-            </pre>
-          </div> <!-- 60 results -->
-          <div id="autocomplete_form_geolocation"> <!-- autocomplete geolocation in a form -->
-            <a href="places/autocomplete_geolocation.html">Autocompleting a form using geolocation if possible</a>
-            <pre id="autocomplete_geolocation" class="nosee">
-                 // try to figure out location from a browser
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                      var geolocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                      autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));
-                  });
-                  // attach the autocomplete to the field
-                  autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+      Download the <a href="http://kelso.it/x/nequickstart"> basic starter kit</a> from <a href="http://www.naturalearthdata.com/">naturalearthdata.com</a>
+    </div>
+    <h2> 2. Get GDAL installed </h2>
+    <div>
+      On a Debian box, it's as easy as:
+      <pre>
+        sudo apt-get install gdal-bin
+      </pre>
+    </div>
+    <h2> 3. Unzip the geodata in some cosy place and look around the archive </h2>
+    <div>
+      We will be interested in those vector shp files which we will want to convert to GeoJSON. A simple command is:
+      <pre>
+        ogr2ogr -f "GeoJSON" ne_10m_geography_regions_polys.json ne_10m_geography_regions_polys.shp
+      </pre>
+      But if you want this to happen to all the shp files in the dir use:
+      <pre>
+        # little test
+        for f in *.shp; do echo "ogr2ogr -f \"GeoJSON\" $f ${f%.shp}.json" ; done
+        # now we are talking
+        for f in *.shp; do ogr2ogr -f GeoJSON  ${f%.shp}.json $f ; done
+      </pre>
+      <h2> 4. You can use grep to check on the number of different features in the JSON file </h2>
+      <div>
+         <pre>
+          grep -cr Polygon ne_10m_geography_regions_polys.json
+          1051
+         </pre>
+      </div>
+      <h2> 5. Now we are going to use <a href="http://geojason.info/2010/geojson-to-google-maps-utility/"> geojson-to-google-maps-utility project </a> </h2>
+      <div>
 
-            </pre>
-          </div> <!-- autocomplete geolocation in a form -->
-        </div> <!-- places_samples -->
-     </div> <!-- places -->
-     <div id="overlays">
-       <div id="overlays_samples">
-         <div id="bounds">
-           <h1> Bounds and overlays </h1>
-           <a href="overlays/latlng_bounds.html"> Constructing a RectangleOverlay and using fitBounds() </a>
-           <pre id="bounds_code" class="nosee">
-            RectangleOverlay.prototype.draw = function() {
-              var projection = this.getProjection();
-              var swPoint = projection.fromLatLngToDivPixel(bounds.getSouthWest());
-              var nePoint = projection.fromLatLngToDivPixel(bounds.getNorthEast());
-              var worldHeight =
-                projection.fromLatLngToDivPixel(new google.maps.LatLng(-85, 0)).y -
-                projection.fromLatLngToDivPixel(new google.maps.LatLng(85, 0)).y;
-              var width = nePoint.x - swPoint.x;
-              var height = swPoint.y - nePoint.y;
-              if (nePoint.y &lt;= swPoint.y) {
-                this.positionBoundingBox1_(nePoint.y, swPoint.x, width, height);
-              } else {
-                height = worldHeight - height;
-                this.positionBoundingBox1_(nePoint.y, swPoint.x, width, height);
-                this.positionBoundingBox2_(swPoint.y - height, swPoint.x, width, height);
-              }
-             }
-           </pre>
-         </div> <!-- bounds -->
-       </div>  <!-- overlays samples -->
-     </div> <!-- overlays -->
-     <div id="css"> <!-- css -->
-       <h1> CSS3</h1>
-       <div id="flip"> <!-- flip -->
-         <a href="css/3drotate.html">  Simple CSS3 flip (no map) </a>
-         <pre id="3drotate_code" class="nosee">
-            #blue .box {
-              background-color: rgb(44,110,168);
-              -webkit-transform: perspective( 900px ) rotateY( 88deg ) translateZ(100px);
-              -webkit-transition:all 2s ease-in-out;
-            }
-            #blue .box:hover {
-              /* reversing the initial state - box goes back in the box and flipping the card */
-              -webkit-transform: rotateY(180deg)  translateZ( -100px );
-              -webkit-transform: translateY( 100px ); rotateY(180deg);
-              -webkit-transform: translateX( 100px ); rotateY(180deg);
-            }
-         </pre>
-       </div>
-       <div id="animation">
-         <a href="css/hypnotic2.html"> Animation with a div with a map </a>
-         <pre id="animation_code" class="nosee">
-           #spinner{
-              -webkit-animation: spin ease-in-out 4s infinite alternate;
-            }
-
-            @-webkit-keyframes spin {
-            from {left: -150px;   -webkit-transform: scale(1.0) rotate(-90deg)   }
-           50%  {left: 0px; -webkit-transform: scale(0.6) rotate(10deg)  }
-           to   {left: 150px; -webkit-transform: scale(1.0) rotate(100deg) }
-            }
-         </pre>
-       </div> <!-- animation -->
-     </div> <!-- css end -->
-     <div id="tmm">
-       <h1> Too many markerks </h1>
-       <div id="markerclusterer">
-         <a href="mc/markerclusterer.html"> MarkerClusterer - no zoom on click </a>
-         <pre id="markerclusterer_code" class="nosee">
-           var markerCluster = new MarkerClusterer(map, markers ,{zoomOnClick: false});
-           google.maps.event.addListener(markerCluster,'clusterclick', function(cluster){alert('center of cluster: '+cluster.getCenter())});
-         </pre>
-       </div> <!-- markerclusterer -->
-       <div id="other">
-        <h1> Other </h1>
-        <div id="mvc">
-          <a href="other/marker_circle_bind.html"> MVC - circle and marker </a>
-          <pre id="mvc_code" class="nosee">
-            circle = new google.maps.Circle({map: map,
-                                     radius: 3 * 1000});  // 3000 km
-            circle.bindTo('center', marker, 'position');
-          </pre> <!-- mvc code -->
-        </div> <!-- mvc -->
-       </div>
+      </div>
     </div>
   </body>
 </html>
