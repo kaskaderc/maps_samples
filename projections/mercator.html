@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta name="description" content="Sample showing distortion of Mercator projectons" />
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Sample showing distortion of Mercator projectons</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map-canvas, #map_canvas {
+        height: 100%;
+        a
+      }
+      @media print {
+        html, body {
+          height: auto;
+        }
+        #map_canvas {
+          height: 650px;
+        }
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      var geodesicRomeNewYork = [
+        new google.maps.LatLng(40.713956, -74.267578),
+        new google.maps.LatLng(41.574361, 12.480469)
+      ];
+
+
+
+      function initialize() {
+        var myLatLng = new google.maps.LatLng(0, 0);
+        var mapOptions = {
+          zoom: 2,
+          center: myLatLng,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+
+        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        var circleOfLatitude1 = new google.maps.Polyline({
+          path: geodesicRomeNewYork,
+          strokeColor: '#FFAA00',
+          strokeOpacity: 1.0,
+          strokeWeight: 2,
+          geodesic: true,
+          draggable: true
+        });
+
+        circleOfLatitude1.setMap(map);
+
+
+
+        var lata = [0, 40, 60, 80, -40, -60, -80];
+        var lnga = [-120, -80, -40, 0, 40, 80, 120];
+        for (var i = 0; i < lata.length; i++) {
+          for (var j = 0; j < lnga.length; j++) {
+            var circleOptions = {
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: '#FF0000',
+              fillOpacity: 0.35,
+              center: new google.maps.LatLng(lata[i], lnga[j]),
+              radius: 300000,
+              draggable: true
+            };
+            var circle = new google.maps.Circle(circleOptions);
+            circle.setMap(map);
+          }
+        }
+
+      }
+    </script>
+  </head>
+  
+  <body onload="initialize()">
+    <div id="map-canvas"></div>
+  </body>
+
+</html>
