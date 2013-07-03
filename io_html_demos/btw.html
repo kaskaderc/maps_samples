@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The bike to work competition: add commute</title>
+  <link rel="stylesheet" type="text/css" href="btw.css" />
+  <style>
+  html, body, #map_canvas {
+    font-family:'Maven Pro', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <link href='https://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+  <script src="//maps.google.com/maps/api/js?libraries=places,visualization&sensor=false"></script>
+  <script src="https://www.google.com/jsapi"></script>
+  <script src="maplabel.js"></script>
+  <script type="text/javascript">
+  var map, drivingLabel, bicyclingLabel, homeAutocomplete, workAutocomplete;
+  var home, work, elevationService, chart, city, cityShort, timeCycled;
+
+  // Load the Visualization API and the columnchart package.
+  google.load('visualization', '1', {
+    packages: ['columnchart']
+  });
+
+  function initialize() {
+    map = new google.maps.Map(document.getElementById('map_canvas'), {
+      zoom: 16,
+      center: new google.maps.LatLng(37.79419, -122.41676), //(37.7921, -122.4157),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true,
+      styles: [{
+        stylers: [{
+          visibility: 'off'
+        }, {
+          saturation: -60
+        }, {
+          lightness: -10
+        }]
+      }, {
+        featureType: 'road',
+        stylers: [{
+          visibility: 'simplified'
+        }, {
+          invert_lightness: true
+        }, {
+          lightness: 75
+        }]
+      }, {
+        featureType: 'road.local',
+        stylers: [{
+          visibility: 'simplified'
+        }, {
+          lightness: 30
+        }]
+      }, {
+        featureType: "landscape",
+        stylers: [{
+          lightness: 100
+        }, {
+          visibility: "on"
+        }]
+      }, {
+        featureType: 'water',
+        stylers: [{
+          color: 'grey'
+        }, {
+          visibility: "on"
+        }]
+      }]
+    });
+
+    elevationService = new google.maps.ElevationService();
+
+    var homeAddrDiv = /** @type {HTMLInputElement} */ (document.getElementById(
+      'home'));
+    homeAutocomplete = new google.maps.places.Autocomplete(homeAddrDiv);
+    var workAddrDiv = /** @type {HTMLInputElement} */ (document.getElementById(
+      'work'));
+    workAutocomplete = new google.maps.places.Autocomplete(workAddrDiv);
+    geolocate();
+    google.maps.event.addListener(homeAutocomplete, 'place_changed', function () {
+      home = homeAutocomplete.getPlace();
+      if (!home.geometry) {
+        return;
+      }
+      //administrative_area_level_2
+      for (var j = 0; j < home.address_components.length; j++) {
+        var att = home.address_components[j].types[0];
+        if (att == 'locality') {
+          city = home.address_components[j].long_name;
+          cityShort = home.address_components[j].short_name;
+          break;
+        }
+      }
+      if (!work || !work.geometry) {
+        return;
+      }
+      comparePaths(home, work);
+    });
+    google.maps.event.addListener(workAutocomplete, 'place_changed', function () {
+      work = workAutocomplete.getPlace();
+      if (!work.geometry) {
+        return;
+      }
+      if (!home || !home.geometry) {
+        return;
+      }
+      comparePaths(home, work)
+    });
+
+  }
+
+  function comparePaths(from, to) {
+    document.getElementById("summary").className = "info showing";
+    console.log(from);
+    summary.innerHTML = '';
+    var info = '<b>Biking for ' + city + ' </b>';
+    info += '<p>(<a style="color: darkgrey;" href="">view results</a>)</p>';
+    info += '<p>You the city\'s 15236 biker!<p>';
+    info += '<hr><p class="grey2">' + cityShort + ' bikers ';
+    info += 'climbed Mount Everest <b>103 times</b>, ';
+    info += 'cycled the Earth <b>2.4 times</b> and ';
+    info += 'burned <b>10157 doughnuts</b> so far!</p><hr>';
+    summary.innerHTML = info;
+
+    getDirections(
+      from.geometry.location,
+      to.geometry.location,
+      google.maps.TravelMode.BICYCLING, [{
+        icon: {
+          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          fillColor: '#0da861',
+          strokeColor: 'white',
+          strokeOpacity: 1,
+          strokeWeight: 1,
+          fillOpacity: 1,
+          scale: 4
+        },
+        offset: '0',
+        repeat: '25px'
+      }]);
+    getDirections(
+      from.geometry.location,
+      to.geometry.location,
+      google.maps.TravelMode.DRIVING, [{
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: '#FF2B48',
+          strokeColor: 'white',
+          strokeOpacity: 1,
+          strokeWeight: 1,
+          fillOpacity: 0.8,
+          scale: 6
+        },
+        offset: '0',
+        repeat: '22px'
+      }]);
+  }
+
+  function getDirections(fromlatlng, tolatltng, travelMode, icons) {
+    var service = new google.maps.DirectionsService();
+    var summary = document.getElementById("summary")
+    var request = {
+      origin: fromlatlng,
+      destination: tolatltng,
+      travelMode: travelMode
+    };
+    service.route(request, function (result, status) {
+      if (status != google.maps.DirectionsStatus.OK) {
+        window.console.log('Error: ' + status);
+        if (travelMode == google.maps.TravelMode.BICYCLING) {
+          summary.innerHTML += 'Biking directions not available. <br>';
+        } else {
+          summary.innerHTML += 'Driving directions not available. <br>';
+        }
+        return;
+      }
+
+      var renderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true,
+        suppressBicyclingLayer: true,
+        polylineOptions: {
+          strokeOpacity: 0,
+          icons: icons
+        }
+      });
+      renderer.setDirections(result);
+
+      var duration = result.routes[0].legs[0].duration.text;
+      var distance = result.routes[0].legs[0].distance.text;
+
+      if (travelMode == google.maps.TravelMode.BICYCLING) {
+        summary.innerHTML += '<p class="orange">You were biking ' + distance +
+          ' in ' + duration + '. </p>';
+        var elevationRequest = {
+          'path': result.routes[0].overview_path,
+          'samples': 256
+        };
+        elevationService.getElevationAlongPath(elevationRequest,
+          plotElevation);
+        timeCycled = result.routes[0].legs[0].duration.value;
+      } else {
+        summary.innerHTML += '<p class="orange">You would be driving ' +
+          distance + ' in ' + duration + '.</p>';
+      }
+
+    })
+  }
+
+  function plotElevation(results, status) {
+    if (status != google.maps.ElevationStatus.OK) {
+      return;
+    }
+
+    // get elevation data
+    var elevationDiv = document.getElementById('elevation_chart');
+    elevationDiv.className = 'elevation showing';
+    chart = new google.visualization.ColumnChart(
+      document.getElementById('elevation_chart'));
+    var elevationResults = results;
+
+    // Extract the elevation samples from the returned results
+    var elevationPath = [];
+    for (var i = 0; i < results.length; i++) {
+      elevationPath.push(elevationResults[i].location);
+    }
+
+    // Extract the data from which to populate the chart.
+    // Because the samples are equidistant, the 'Sample'
+    // column here does double duty as distance along the
+    // X axis.
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Sample');
+    data.addColumn('number', 'Elevation');
+    var gain = 0;
+    for (var i = 0; i < results.length; i++) {
+      data.addRow(['', elevationResults[i].elevation]);
+      if (i > 0) {
+        var climbed = elevationResults[i].elevation - elevationResults[i - 1].elevation;
+        if (climbed > 0) {
+          gain += climbed;
+        }
+      }
+    }
+    var kcal = timeCycled / 60 / 60 * 500;
+    var benefit = '<p> Calories lost: ' + kcal.toFixed(0) + 'kcal';
+    if (gain > 0) {
+      benefit += ' | Elevation gain:' + gain.toFixed(0) + 'm';
+    }
+    benefit += '</p>'
+    summary.innerHTML += benefit;
+    // Draw the chart using the data within its DIV.
+    // document.getElementById('elevation_chart').style.display = 'block';
+    chart.draw(data, {
+      width: 400,
+      height: 120,
+      legend: 'none',
+      colors: ['#FF2B48'],
+      backgroundColor: 'rgba(255, 255, 255, 0.7)'
+    });
+  }
+
+  function geolocate() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var geolocation = new google.maps.LatLng(position.coords.latitude,
+          position.coords.longitude);
+        map.setCenter(geolocation);
+        homeAutocomplete.setBounds(new google.maps.LatLngBounds(geolocation,
+          geolocation));
+        workAutocomplete.setBounds(new google.maps.LatLngBounds(geolocation,
+          geolocation));
+      });
+    }
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+</head>
+
+<body>
+  <div class="banner logo">Bike to work month
+    <div class="subtitle">Biked to work? Add it to your city's score!</div>
+  </div>
+  <input id="home" class="address home" type="text" placeholder="Enter home address">
+  <input id="work" class="address work" type="text" placeholder="Enter work address">
+  <div id="map_canvas"></div>
+  <div id="summary" class="info hidden"></div>
+  <div id="elevation_chart" class="elevation hidden"></div>
+</body>
+
+</html>

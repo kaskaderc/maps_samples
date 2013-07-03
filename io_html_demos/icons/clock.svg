@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Calque_1" x="0px" y="0px" width="83px" height="100px" viewBox="0 0 100 121" enable-background="new 0 0 100 121.108" xml:space="preserve" fill="red" stroke="red">
+<circle stroke-width="11.8702" stroke-miterlimit="10" cx="49.865" cy="60.529" r="43.555"/>
+<line stroke-width="11.8702" stroke-linecap="round" stroke-miterlimit="10" x1="27.915" y1="101.46" x2="19.551" y2="114.721"/>
+<line stroke-width="11.8702" stroke-linecap="round" stroke-miterlimit="10" x1="71.935" y1="101.46" x2="80.298" y2="114.721"/>
+<path d="M37.489,9.082V9.06c-4.64-8.289-15.122-11.247-23.41-6.607C5.79,7.093,2.832,17.574,7.471,25.864L37.489,9.082z"/>
+<path d="M61.693,9.082V9.06c4.641-8.289,15.122-11.247,23.411-6.607c8.289,4.641,11.248,15.122,6.607,23.411L61.693,9.082z"/>
+<g>
+	<path d="M45.611,11.743c0,0.539,0.437,0.975,0.975,0.975h6.821c0.539,0,0.976-0.437,0.976-0.975V4.232   c0-0.539-0.437-0.975-0.976-0.975h-6.821c-0.539,0-0.975,0.437-0.975,0.975V11.743z" />
+</g>
+<polyline stroke-width="4.8161" stroke-linecap="round" stroke-miterlimit="10" points="49.865,29.86   49.865,60.529 69.062,75.04 "/>
+</svg>

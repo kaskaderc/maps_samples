@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Walk generator V3</title>
+  <link href='//fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Londrina+Sketch' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="walk.css" />
+  <link rel="stylesheet" type="text/css" href="android.css" />
+  <script src="//maps.google.com/maps/api/js?libraries=places,visualization&sensor=false">
+  </script>
+  <script src="maplabel-compiled.js">
+  </script>
+  <script type="text/javascript" src="walk.js"></script>
+</head>
+
+<body>
+  <div class="app-bar">
+    <div class='appName'>Walker</div>
+  </div>
+  <!-- app-bar -->
+  <div class="kd-content-sidebar">
+    <ul>
+      <li class="selected">
+        <a id="eatout">Eat out</a>
+      </li>
+      <li>
+        <a id="party">Party!</a>
+      </li>
+      <li>
+        <a id="edu">Educational</a>
+      </li>
+      <li>
+        <a id="practical">Practical</a>
+      </li>
+      <li>
+        <a id="entertaining">Entertaining</a>
+      </li>
+      <li>
+        <a id="wellness">Wellness</a>
+      </li>
+    </ul>
+    <div style="text-align: right; padding-top:20px;">
+      <a style="color: red;" href=""> Share </a>
+    </div>
+  </div>
+  <!-- will do summary with map label with map label -->
+  <div class="content">
+    <input id="target" type="text" placeholder="Search Box">
+    <div id="map"></div>
+    <div id="information" class="information">
+      <div id="photos" class="photos"></div>
+    </div>
+  </div>
+  <!-- end content -->
+  <!-- begin droid -->
+  <div class="droid" id="droid">
+    <div class="head">
+      <div class="eye"></div>
+      <div class="eye"></div>
+      <div class="ear"></div>
+      <div class="ear"></div>
+    </div>
+    <div class="torso"></div>
+    <div class="leg"></div>
+    <div class="leg"></div>
+    <div class="arm1"></div>
+    <div class="arm2"></div>
+  </div>
+  <!-- end droid -->
+</body>
+
+</html>
+
