@@ -4,22 +4,57 @@
 <script src="ne_10m_admin_1_states_provinces_shp.json"> </script>
 <script type="text/javascript" 
 src="https://maps.googleapis.com/maps/api/js?&sensor=false"></script>
-<script src="https://raw.github.com/JasonSanford/GeoJSON-to-Google-Maps/master/GeoJSON.js"></script>
+<!--<script  type="text/javascript" src="https://raw.github.com/JasonSanford/GeoJSON-to-Google-Maps/master/GeoJSON.js"></script>-->
+<script  type="text/javascript" src="GeoJSON.js"></script>
 <script>
-  var map;
+  var styles;
   function initialize() {
+    var style = [
+  {
+    "featureType": "landscape",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "poi",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "administrative",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "transit",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  },{
+    "featureType": "road",
+    "stylers": [
+      { "visibility": "simplified" }
+    ]
+  },{
+  }
+];
+
     map = new google.maps.Map(document.getElementById("map"));
-    map.setCenter(new google.maps.LatLng(30, 30));
-    map.setZoom(2);
+    map.setCenter(new google.maps.LatLng(47.3685,8.53363));
+    map.setZoom(10);
     map.setMapTypeId('roadmap');
+    map.setOptions({styles: style});
+    google.maps.visualRefresh = true;
     var googleOptions = {
-      strokeColor: "#FFFF00",
-      strokeWeight: 7,
-      strokeOpacity: 0.75
+      strokeColor: "#6aaf64",
+      fillOpacity: 0,
+      strokeWeight: 2,
+      strokeOpacity: 0.9
     };
 
     var googleVector = new GeoJSON(polys, googleOptions);
-    addVector(googleVector);
+    // var googleVector2 = new GeoJSON(polys, googleOptions2);
+    addVector(googleVector);    
 
 };
 
@@ -29,8 +64,37 @@ function addVector(googleVector){
   } else {
     for(var idx in googleVector) {
       if(typeof googleVector[idx].setMap === 'function') {
-        if (googleVector[idx].geojsonProperties.scalerank > 5) {
+        if (googleVector[idx].geojsonProperties.scalerank > 5 && googleVector[idx].geojsonProperties.admin == 'Switzerland') {            
           googleVector[idx].setMap(map);
+          var shade = new google.maps.Polyline(
+              { strokeColor: "#6aaf64",
+              fillOpacity: 0,
+              strokeWeight: 4,
+              strokeOpacity: 0.4,
+              path:  googleVector[idx].getPath()}); 
+        shade.setMap(map);
+        var shade2 = new google.maps.Polyline(
+              { strokeColor: "#6aaf64",
+              fillOpacity: 0,
+              strokeWeight: 6,
+              strokeOpacity: 0.2,
+              path:  googleVector[idx].getPath()});         
+        shade2.setMap(map);
+        var shade3 = new google.maps.Polyline(
+              { strokeColor: "#6aaf64",
+              fillOpacity: 0,
+              strokeWeight: 8,
+              strokeOpacity: 0.1,
+              icons: [{
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE, fillOpacity: 1, scale: 3
+                },
+                repeat: '10px'
+              }],
+              path:  googleVector[idx].getPath()});         
+        shade3.setMap(map);
+        
+         // googleVector2[idx].setMap(map);          
         }
         //add a listener
         google.maps.event.addListener(googleVector[idx],"mouseover",
