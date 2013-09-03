@@ -23,12 +23,8 @@ var idleTimer;
 var placeMarkers = {};
 var eatoutTypes, walkType = ['restaurant', 'bar', 'cafe', 'meal_takeaway'];
 var partyTypes = ['bar', 'nightclub', 'casino'];
-var eduTypes = ['aquarium', 'art_gallery', 'book_store', 'library', 'museum',
-  'university', 'zoo'
-];
-var practical = ['atm', 'bakery', 'bank', 'bicycle_store', 'book_store',
-  'bus_station', , 'dentist', 'florist', 'laundry', 'laywer'
-];
+var eduTypes = ['aquarium', 'art_gallery', 'book_store', 'library', 'museum', 'university', 'zoo'];
+var practical = ['atm', 'bakery', 'bank', 'bicycle_store', 'book_store', 'bus_station', , 'dentist', 'florist', 'laundry', 'laywer'];
 var funTypes = ['amusement_park', 'aquarium', 'bowling_alley', 'movie_theater'];
 var ablutionTypes = ['beauty_salon', 'dentist', 'hair_care', 'spa'];
 
@@ -49,7 +45,7 @@ var FADE_IN_TIMEOUT = 20;
 
 function displayMap() {
   addTypeListeners();
-  var mapCenter = new google.maps.LatLng(37.773763, -122.419227);
+  var mapCenter = new google.maps.LatLng(37.773763, - 122.419227);
   mapOptions = {
     zoom: 17,
     center: mapCenter,
@@ -109,8 +105,7 @@ function displayMap() {
       }]
     }
   };
-  directionsRenderer =
-    new google.maps.DirectionsRenderer(directionsRendererOpts);
+  directionsRenderer = new google.maps.DirectionsRenderer(directionsRendererOpts);
   anchor = createMarker();
   google.maps.event.addDomListener(map, 'drag', function() {
     document.getElementById('map').style.height = '600px';
@@ -128,10 +123,8 @@ function displayMap() {
 
   var input = document.getElementById('target');
   var autocomplete = new google.maps.places.Autocomplete(input);
-  var empty_marker = new google.maps.MarkerImage(
-    'icons/marker_copy.png',
-    new google.maps.Size(32, 32)
-  );
+  var empty_marker = new google.maps.MarkerImage('icons/marker_copy.png',
+  new google.maps.Size(32, 32));
   var searchmarker = new google.maps.Marker({
     icon: empty_marker
   });
@@ -170,10 +163,8 @@ function displayMap() {
  */
 
 function createMarker() {
-  var marker_image = new google.maps.MarkerImage(
-    'icons/marker_blue.png',
-    new google.maps.Size(32, 32)
-  );
+  var marker_image = new google.maps.MarkerImage('icons/marker_blue.png',
+  new google.maps.Size(32, 32));
 
   var markerOptions = {
     clickable: false,
@@ -254,33 +245,32 @@ function crateWalkingPath(point) {
   startPoint = new google.maps.LatLng(point.lat(), point.lng());
 
   waypoints[0] = {
-    location: rotate(point, -1 * d * Math.cos(0.3 * Math.PI),
-        -1.2 * d * Math.sin(0.3 * Math.PI),
-        rotation),
+    location: rotate(point, - 1 * d * Math.cos(0.3 * Math.PI), - 1.2 * d * Math.sin(0.3 * Math.PI),
+    rotation),
     stopover: false
   };
 
   waypoints[1] = {
     location: rotate(
-      point, -1 * d * (Math.cos(0.3 * Math.PI) + Math.sin(0.4 * Math.PI)),
-      1.2 * d * (Math.cos(0.4 * Math.PI) - Math.sin(0.3 * Math.PI)),
-      rotation),
+    point, - 1 * d * (Math.cos(0.3 * Math.PI) + Math.sin(0.4 * Math.PI)),
+    1.2 * d * (Math.cos(0.4 * Math.PI) - Math.sin(0.3 * Math.PI)),
+    rotation),
     stopover: false
   };
 
   waypoints[2] = {
     location: rotate(
-      point, -1 * d * (Math.cos(0.3 * Math.PI) + Math.sin(0.4 * Math.PI)),
-      d + (1.2 * d * (Math.cos(0.4 * Math.PI) - Math.sin(0.3 * Math.PI))),
-      rotation),
+    point, - 1 * d * (Math.cos(0.3 * Math.PI) + Math.sin(0.4 * Math.PI)),
+    d + (1.2 * d * (Math.cos(0.4 * Math.PI) - Math.sin(0.3 * Math.PI))),
+    rotation),
     stopover: false
   };
 
   waypoints[3] = {
     location: rotate(
-      point, -1 * d * Math.cos(0.3 * Math.PI),
-      1.2 * d * Math.sin(0.3 * Math.PI),
-      rotation),
+    point, - 1 * d * Math.cos(0.3 * Math.PI),
+    1.2 * d * Math.sin(0.3 * Math.PI),
+    rotation),
     stopover: false
   };
 
@@ -423,8 +413,7 @@ function activatePlace(index) {
   // Prepare markers.
   var placeinfo = placeMarkers[index];
   var place = placeinfo[0];
-  if (place.geometry.location &&
-      !map.getBounds().contains(place.geometry.location)) {
+  if (place.geometry.location && !map.getBounds().contains(place.geometry.location)) {
     map.panTo(place.geometry.location);
   }
   toggleBounce();
@@ -498,15 +487,10 @@ function activatePlace(index) {
   placesService.getDetails(request, function(placed, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       console.log(JSON.stringify(placed));
-      moreDetails.innerHTML += '<h3 style="margin-bottom: 5px;">' +
-        placed.formatted_address +
-        '</h3>';
-      moreDetails.innerHTML += '<p style="padding-left: 10px;" >' +
-        placed.formatted_phone_number +
-        '</p>';
+      moreDetails.innerHTML += '<h3 style="margin-bottom: 5px;">' + placed.formatted_address + '</h3>';
+      moreDetails.innerHTML += '<p style="padding-left: 10px;" >' + placed.formatted_phone_number + '</p>';
       if (placed.website) {
-        moreDetails.innerHTML += '<a href="' + placed.website +
-          '"> website </a>';
+        moreDetails.innerHTML += '<a href="' + placed.website + '"> website </a>';
       }
       pinfo.appendChild(moreDetails);
 
@@ -516,13 +500,11 @@ function activatePlace(index) {
 
       var summary = '';
       if (placed.rating) {
-        summary +=
-          '<h3 style="margin-bottom: 5px; margin-left: 5px;">Rating:<br>';
+        summary += '<h3 style="margin-bottom: 5px; margin-left: 5px;">Rating:<br>';
         summary += '' + placed.rating + ' of 5</h3>';
       }
       if (placed.price_level) {
-        summary +=
-          '<h3 style="margin-bottom: 5px; margin-left: 5px;">Price level:<br>';
+        summary += '<h3 style="margin-bottom: 5px; margin-left: 5px;">Price level:<br>';
         if (placed.price_level == 0) {
           summary += 'Free';
         }
@@ -541,13 +523,10 @@ function activatePlace(index) {
         summary += '</h3>';
       }
       if (placed.html_attributions && placed.html_attributions.length) {
-        summary += '<footer>' + JSON.stringify(placed.html_attributions) +
-          '</footer>';
+        summary += '<footer>' + JSON.stringify(placed.html_attributions) + '</footer>';
       }
       reviews.innerHTML += summary;
-      reviews.innerHTML += '<h3 style=' +
-          '"text-align:right; margin-right: 10px;">' +
-          '<a href="">Moar</a></h3>';
+      reviews.innerHTML += '<h3 style=' + '"text-align:right; margin-right: 10px;">' + '<a href="">Moar</a></h3>';
       pinfo.appendChild(reviews);
     }
   });
@@ -559,10 +538,8 @@ function showPano() {
 }
 
 function createPlaceMarker(place, index) {
-  var marker_image = new google.maps.MarkerImage(
-    'icons/marker.png',
-    new google.maps.Size(20, 20)
-  );
+  var marker_image = new google.maps.MarkerImage('icons/marker.png',
+  new google.maps.Size(20, 20));
   var markerOptions = {
     clickable: true,
     draggable: false,
@@ -582,8 +559,7 @@ function createPlaceMarker(place, index) {
   });
   google.maps.event.addListener(marker, 'mouseout', function() {
     if (document.getElementById('photos_' + index)) {
-      document.getElementById('photos_' + index).className =
-        'gridbox inactive';
+      document.getElementById('photos_' + index).className = 'gridbox inactive';
     }
     console.log('mouseout: ' + index);
   });
@@ -598,47 +574,53 @@ function createPlaceMarker(place, index) {
 
 function addTypeListeners() {
   document.getElementById('eatout').addEventListener('click',
-    function() {
-      document.getElementById(lastWalkType).parentNode.className = '';
-      lastWalkType = this.id;
-      walkType = eatoutTypes;
-      this.parentNode.className = 'selected';
-    });
+
+  function() {
+    document.getElementById(lastWalkType).parentNode.className = '';
+    lastWalkType = this.id;
+    walkType = eatoutTypes;
+    this.parentNode.className = 'selected';
+  });
   document.getElementById('party').addEventListener('click',
-    function() {
-      document.getElementById(lastWalkType).parentNode.className = '';
-      lastWalkType = this.id;
-      walkType = partyTypes;
-      this.parentNode.className = 'selected';
-    });
+
+  function() {
+    document.getElementById(lastWalkType).parentNode.className = '';
+    lastWalkType = this.id;
+    walkType = partyTypes;
+    this.parentNode.className = 'selected';
+  });
   document.getElementById('edu').addEventListener('click',
-    function() {
-      document.getElementById(lastWalkType).parentNode.className = '';
-      lastWalkType = this.id;
-      walkType = eduTypes;
-      this.parentNode.className = 'selected';
-    });
+
+  function() {
+    document.getElementById(lastWalkType).parentNode.className = '';
+    lastWalkType = this.id;
+    walkType = eduTypes;
+    this.parentNode.className = 'selected';
+  });
   document.getElementById('practical').addEventListener('click',
-    function() {
-      document.getElementById(lastWalkType).parentNode.className = '';
-      lastWalkType = this.id;
-      walkType = practical;
-      this.parentNode.className = 'selected';
-    });
+
+  function() {
+    document.getElementById(lastWalkType).parentNode.className = '';
+    lastWalkType = this.id;
+    walkType = practical;
+    this.parentNode.className = 'selected';
+  });
   document.getElementById('entertaining').addEventListener('click',
-    function() {
-      document.getElementById(lastWalkType).parentNode.className = '';
-      lastWalkType = this.id;
-      walkType = funTypes;
-      this.parentNode.className = 'selected';
-    });
+
+  function() {
+    document.getElementById(lastWalkType).parentNode.className = '';
+    lastWalkType = this.id;
+    walkType = funTypes;
+    this.parentNode.className = 'selected';
+  });
   document.getElementById('wellness').addEventListener('click',
-    function() {
-      document.getElementById(lastWalkType).parentNode.className = '';
-      lastWalkType = this.id;
-      walkType = ablutionTypes;
-      this.parentNode.className = 'selected';
-    });
+
+  function() {
+    document.getElementById(lastWalkType).parentNode.className = '';
+    lastWalkType = this.id;
+    walkType = ablutionTypes;
+    this.parentNode.className = 'selected';
+  });
 }
 
 function removePlaceInfoDiv() {

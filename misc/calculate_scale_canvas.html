@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Sample of ad hoc scale bar calculation
+    </title>
+  </head>
+  <body>
+    <h1>at given locations : Equator, Paris, Helsinki</h1>
+    <canvas id="eq" width="200"
+    height="25">Your browser does not support the canvas element.</canvas>
+    <br>
+    <canvas id="paris" width="200" height="25">Your browser does not support the canvas element.</canvas>
+    <br>
+    <canvas id="hel" width="200" height="25">Your browser does not support the canvas element.</canvas>
+    <br>
+    <h1>Every 10 degrees</h1>
+    <canvas id="0" width="400" height="25"></canvas>
+    <br>
+    <canvas id="1" width="400" height="25"></canvas>
+    <br>
+    <canvas id="2" width="400" height="25"></canvas>
+    <br>
+    <canvas id="3" width="400" height="25"></canvas>
+    <br>
+    <canvas id="4" width="400" height="25"></canvas>
+    <br>
+    <canvas id="5" width="400" height="25"></canvas>
+    <br>
+    <canvas id="6" width="400" height="25"></canvas>
+    <br>
+    <canvas id="7" width="400" height="25"></canvas>
+    <br>
+    <canvas id="8" width="400" height="25"></canvas>
+    <br>
+    <script type="text/javascript">
+      // http://wiki.openstreetmap.org/wiki/Zoom_levels
+      // Distance represented by one pixel (S)
+      // S=C*cos(y)/2^(z+8)
+      // where...
+      // C is the (equatorial) circumference of the Earth
+      // z is the zoom level, y is the latitude of where you're interested in the scale
+      // S = kilometers per one pixel
+      // 1/S = pixels per kilometer
+      // S=C*cos(y)/2^(z+8) =
+      // Let's use the Earth Radius in kilometers:
+      // kilometers per one pixel = S=C*cos(y)/2^(z+8) = ( 2 * Math.PI * Rkm * cos(latitude in radians)) / 2^(z+8) = (2 * Math.PI * Rkm * cos(lat*Math.PI / 180)) / 2^(z+8) = (2 * Math.PI * 6378 * cos (lat*Math.PI / 180)) / 2^(z+8)
+      // pixels_per_kilomteter = 1/S = 2^(z+8) / (2 * Math.PI * 6378 * cos (lat*Math.PI / 180))
+      // R - earth radius in meters = 6378137;
+      // Rkm -earth radius in kilometers = 6,397,300 / 1000 ~ 6378
+      var lat_paris = 49;
+      var lat_eq = 0;
+      var lat_hel = 60;
+
+      var zoom = 14;
+      var size = 600;
+      var R_EARTH = 6378137;
+
+      //1km in pixels:
+      km2px = (size * 1000) / ((Math.cos(lat_paris * Math.PI / 180) * 2 * Math.PI * R_EARTH) / (256 * Math.pow(2, zoom)) * 600)
+       var c = document.getElementById("paris");
+      var cxt = c.getContext("2d");
+      cxt.moveTo(15, 15);
+      cxt.lineTo(15 + km2px, 15);
+      cxt.stroke();
+      cxt.textBaseline = "bottom";
+      cxt.strokeText("1 km Paris", 17, 12);
+
+
+      //1km in pixels:
+      km2px = (size * 1000) / ((Math.cos(lat_eq * Math.PI / 180) * 2 * Math.PI * R_EARTH) / (256 * Math.pow(2, zoom)) * 600)
+       var c = document.getElementById("eq");
+      var cxt = c.getContext("2d");
+      cxt.moveTo(15, 15);
+      cxt.lineTo(15 + km2px, 15);
+      cxt.stroke();
+      cxt.textBaseline = "bottom";
+      cxt.strokeText("1 km EQ", 17, 12);
+
+
+
+      //1km in pixels:
+      km2px = (size * 1000) / ((Math.cos(lat_hel * Math.PI / 180) * 2 * Math.PI * R_EARTH) / (256 * Math.pow(2, zoom)) * 600)
+       var c = document.getElementById("hel");
+      var cxt = c.getContext("2d");
+      cxt.moveTo(15, 15);
+      cxt.lineTo(15 + km2px, 15);
+      cxt.stroke();
+      cxt.textBaseline = "bottom";
+      cxt.strokeText("1 km HEL", 17, 12);
+
+      //1km in pixels:
+      for (var i = 0; i < 90; i += 10) {
+        var km2px = (size * 1000) / ((Math.cos(i * Math.PI / 180) * 2 * Math.PI * R_EARTH) / (256 * Math.pow(2, zoom)) * 600)
+        var c = document.getElementById('' + i / 10);
+        var cxt = c.getContext("2d");
+        cxt.moveTo(15, 15);
+        cxt.lineTo(15 + km2px, 15);
+        cxt.stroke();
+        cxt.textBaseline = "bottom";
+        cxt.strokeText("1 km at " + i + " *", 17, 12);
+      }
+    </script>
+  </body>
+</html>

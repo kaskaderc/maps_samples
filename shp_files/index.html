@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+     kd-f geosamples
+    </title>
+    <style>
+      .nosee {
+        visibility: hidden;
+        display: none
+      }
+      .see {
+        visibility: visible;
+        display: block
+      }
+      h1 {
+        font-family: Georgia, Arial, Verdana, sans-serif;
+        font-size: 24px;
+        font-style: italic;
+        font-variant: normal;
+      }
+      a {
+        color: #21759b;
+        text-decoration: none;
+      }
+      a:visited {
+        color: #551a8b;
+      }
+
+      body {
+        font-family: Georgia, Times, 'Times New Roman', serif;
+        margin: 5%;
+      }
+      .button {
+         padding: 5px;
+         background-color: #21759b;
+         color: white;
+         width: 200px;
+         text-align: center;
+         border-style:solid;
+         border-width:1px;
+      }
+      .button:hover {
+        color: #21759b;
+        background-color: white;
+      }
+    </style>
+    <script>
+      function switchPreview(){
+        var code = document.getElementsByTagName("pre");
+        for (var i=0;i < code.length; i++) {
+           if (code[i].className == 'see') {
+             code[i].className='nosee';
+            } else {
+              code[i].className='see';
+            }
+        }
+     }
+    </script>
+  </head>
+  <body>
+    <h1> Playing with shp files is not that hard </h1>
+    <div> If you do not have a lot of time and do not need to understand how this is done check out the <a style="color: red;" href="http://www.shpescape.com/">shpescape</a> website.
+    </div>
+    <div> The only thing you need to do is upload the full zip file with the shape files and wait a bit. The result is html code  that visualizes the shp file data.
+    </div>
+   <div style="margin-top: 10px;"> If you still want to know what happens when you press the upload button or you simply want to do it yourself, read on </div>
+    <h2> 1. Getting started </h2>
+    <div>
+      Download the <a href="http://kelso.it/x/nequickstart"> basic starter kit</a> from <a href="http://www.naturalearthdata.com/">naturalearthdata.com</a>
+    </div>
+    <h2> 2. Get GDAL installed </h2>
+    <div>
+      On a Debian box, it's as easy as:
+      <pre>
+        sudo apt-get install gdal-bin
+      </pre>
+    </div>
+    <h2> 3. Unzip the geodata in some cosy place and look around the archive </h2>
+    <div>
+      We will be interested in those vector shp files which we will want to convert to GeoJSON. A simple command is:
+      <pre>
+        ogr2ogr -f "GeoJSON" ne_10m_geography_regions_polys.json ne_10m_geography_regions_polys.shp
+      </pre>
+      But if you want this to happen to all the shp files in the dir use:
+      <pre>
+        # little test
+        for f in *.shp; do echo "ogr2ogr -f \"GeoJSON\" $f ${f%.shp}.json" ; done
+        # now we are talking
+        for f in *.shp; do ogr2ogr -f GeoJSON  ${f%.shp}.json $f ; done
+      </pre>
+      <h2> 4. You can use grep to check on the number of different features in the JSON file </h2>
+      <div>
+         <pre>
+          grep -cr Polygon ne_10m_geography_regions_polys.json
+          1051
+         </pre>
+      </div>
+      <h2> 5. Edit the json file to make it a variable definition instead, so that you can simply include it like a JS file</h2>
+      <div>
+        <pre>
+          var polys = {...
+        </pre>
+      </div>
+      <h2> 6. Now we are going to use <a href="http://geojason.info/2010/geojson-to-google-maps-utility/"> geojson-to-google-maps-utility project </a> </h2>
+      <div>
+        <!-- ne_10m_populated_places -->
+         Create a basic html file and load the Google Maps API v3 and the GeoJSON-to-google-maps library
+         <pre>
+          &lt;script src="ne_10m_populated_places.json"&gt;&lt;/script&gt;
+          &lt;script src="https://raw.github.com/JasonSanford/GeoJSON-to-Google-Maps/master/GeoJSON.js"&gt;&lt;/script&gt;
+          &lt;script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?&sensor=false&libraries=visualization"&gt;&lt;/script&gt;
+        </pre>
+        Notice that we loaded the visualization lib as well with <code> &libraries=visualization </code> param.
+      </div>
+      <h2>7. Create a function that will convert the list of GeoJSON to Maps API Objects: </h2>
+      <div>
+        You need to create a function that will parse the GeoJSON and create the right equivalent of the object in Google Maps. A sample would be:
+        <pre>
+  function addVector(googleVector){
+  if(!googleVector.length) {
+    googleVector.setMap(map);
+  } else {
+    for(var idx in googleVector) {
+      if(typeof googleVector[idx].setMap === 'function') {
+        if ( googleVector[idx].position ) {
+          hmd.push({location: googleVector[idx].position, weight: googleVector[idx].geojsonProperties.SCALERANK});
+        }
+        //googleVector[idx].setMap(map);
+        //add a listener
+        //google.maps.event.addListener(googleVector[idx],"mouseover",
+        //  function(pme) {
+        //    document.getElementById("info").innerHTML = this.geojsonProperties.name ;
+        //   });
+      } else {
+        addVector(googleVector[idx]);
+      }
+    }
+  }
+}
+        </pre>
+      </div>
+      <h2> 8. Create a list of Google Maps API v3 Objects from the GeoJSON</h2>
+      <div>
+        <pre>
+        var googleVector = new GeoJSON(polys, googleOptions);
+        addVector(googleVector);
+        </pre>
+      </div>
+      <h2>Play with different visualizations and chose the one you like best</h2>
+    </div>
+      <ul>
+        <li> <a href="polys/populated_places_markers.html"> Populated places - marker map </a> does not make much sense, but proves a point that visualization is needed </li>
+        <li> <a href="polys/populated_places_heatmap.html"> a heatmap of populated places </a> gives you a whole new idea on the distribution </li>
+        <li><a href="polys/urban_areas_polys.html">polygons of urbanized areas</a> shows you how much data you are missing when looking at an overview </li>
+      </ul>
+    <div>
+    </div>
+  </body>
+</html>

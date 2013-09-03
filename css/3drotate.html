@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Simple 3D rotate on hover</title>
+    <meta charset="utf-8">
+    <style media="screen">
+      .container {
+        width: 400px;
+        height: 400px;
+        border: 1px solid rgb(81, 138, 83);
+        margin: 140px auto 140px;
+      }
+      .box {
+        width: 100%;
+        height: 100%;
+      }
+      #blue .box {
+        background-color: rgb(44, 110, 168);
+        -webkit-transform: perspective(900px) rotateY(88deg) translateZ(100px);
+        -webkit-transition:all 2s ease-in-out;
+      }
+      #blue .box:hover {
+        /* reversing the initial state - box goes back in the box and flipping the card */
+        -webkit-transform: rotateY(180deg) translateZ(-100px);
+        -webkit-transform: translateY(100px);
+        rotateY(180deg);
+        -webkit-transform: translateX(100px);
+        rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <section id="blue" class="container">
+      <div class="box blue"></div>
+    </section>
+  </body>
+</html>

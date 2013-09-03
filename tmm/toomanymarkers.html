@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+  <title>Solutions to the Too Many Markers problem with the Google Maps JavaScript
+    API V3</title>
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="markermanager.js"></script>
+  <script type="text/javascript" src="markerclusterer_compiled.js"></script>
+  <script type="text/javascript" src="markers.js"></script>
+  <script type="text/javascript" src="functions.js"></script>
+  <style type="text/css">
+    #map {
+      width: 900px;
+      height: 500px;
+    }
+    #controls {
+      margin: 0;
+      list-style: none;
+    }
+    #controls li {
+      display: inline;
+      margin-left: 42px;
+      font-family: Sans-Serif;
+      font-size: 10pt;
+    }
+    #fusion-hm-li {
+      visibility: hidden;
+      margin-left: 8px;
+    }
+    button {
+      background: #4D90FE;
+      border: 1px solid rgba(0, 0, 0, .1);
+      color: white;
+      display: inline-block;
+      font-size: 11px;
+      font-weight: bold;
+      height: 27px;
+      line-height: 27px;
+      min-width: 54px;
+      padding: 0 8px;
+      text-align: center;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div>
+    <button title="Custom Icon" id="ci-cb" name="ci-cb">Custom Icon</button>
+    <button title="KML Layer" id="kml-cb" name="kml-cb">KML Layer</button>
+    <button title="Marker Manager" id="mgr-cb" name="mgr-cb">Marker Manager</button>
+    <button title="MMarker Clusterer" id="mc-cb" name="mc-cb">Marker Clusterer</button>
+  </div>
+</body>
+
+</html>

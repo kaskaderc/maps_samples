@@ -49,18 +49,18 @@ window['MapLabel'] = MapLabel;
 /** @inheritDoc */
 MapLabel.prototype.changed = function(prop) {
   switch (prop) {
-    case 'fontFamily':
-    case 'fontSize':
-    case 'fontColor':
-    case 'strokeWeight':
-    case 'strokeColor':
-    case 'align':
-    case 'text':
-      return this.drawCanvas_();
-    case 'maxZoom':
-    case 'minZoom':
-    case 'position':
-      return this.draw();
+  case 'fontFamily':
+  case 'fontSize':
+  case 'fontColor':
+  case 'strokeWeight':
+  case 'strokeColor':
+  case 'align':
+  case 'text':
+    return this.drawCanvas_();
+  case 'maxZoom':
+  case 'minZoom':
+  case 'position':
+    return this.draw();
   }
 };
 
@@ -73,7 +73,8 @@ MapLabel.prototype.drawCanvas_ = function() {
   if (!canvas) return;
 
   var style = canvas.style;
-  style.zIndex = /** @type number */(this.get('zIndex'));
+  style.zIndex = /** @type number */
+  (this.get('zIndex'));
 
   var ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -130,10 +131,10 @@ MapLabel.prototype['onAdd'] = MapLabel.prototype.onAdd;
  */
 MapLabel.prototype.getMarginLeft_ = function(textWidth) {
   switch (this.get('align')) {
-    case 'left':
-      return 0;
-    case 'right':
-      return -textWidth;
+  case 'left':
+    return 0;
+  case 'right':
+    return -textWidth;
   }
   return textWidth / -2;
 };
@@ -154,7 +155,8 @@ MapLabel.prototype.draw = function() {
     return;
   }
 
-  var latLng = /** @type {google.maps.LatLng} */ (this.get('position'));
+  var latLng = /** @type {google.maps.LatLng} */
+  (this.get('position'));
   if (!latLng) {
     return;
   }
@@ -175,8 +177,10 @@ MapLabel.prototype['draw'] = MapLabel.prototype.draw;
  * @return {string} blank string if visible, 'hidden' if invisible.
  */
 MapLabel.prototype.getVisible_ = function() {
-  var minZoom = /** @type number */(this.get('minZoom'));
-  var maxZoom = /** @type number */(this.get('maxZoom'));
+  var minZoom = /** @type number */
+  (this.get('minZoom'));
+  var maxZoom = /** @type number */
+  (this.get('maxZoom'));
 
   if (minZoom === undefined && maxZoom === undefined) {
     return '';

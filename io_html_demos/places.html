@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -10,59 +10,55 @@
         margin: 0;
         padding: 0;
       }
-
       #map_canvas {
         height: 100%;
       }
-
       @media print {
         html, body {
           height: auto;
         }
-
         #map_canvas {
           height: 650px;
         }
       }
     </style>
     <title>Google Maps JavaScript API v3 Example: SearchBox</title>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script>
       function initialize() {
-          var mapStyle = [
-    {
-      stylers: [
-        {saturation: -100},
-      ]
-    },{
-      featureType: 'water',
-      elementType: 'geometry',
-      stylers: [
-        { lightness: -30 }
-      ]
-    },{
-      featureType: 'water',
-      elementType: 'labels',
-      stylers: [
-        { invert_lightness: true },
-        { lightness: 30 }
-      ]
-    },{
-      featureType: 'road',
-      stylers: [
-        { lightness: 25 }
-      ]
-    },{
-      featureType: 'poi.park',
-      elementType: 'geometry',
-      stylers: [
-        { lightness: 20 }
-      ]
-    }
-  ];
+        var mapStyle = [{
+          stylers: [{
+            saturation: -100
+          }, ]
+        }, {
+          featureType: 'water',
+          elementType: 'geometry',
+          stylers: [{
+            lightness: -30
+          }]
+        }, {
+          featureType: 'water',
+          elementType: 'labels',
+          stylers: [{
+            invert_lightness: true
+          }, {
+            lightness: 30
+          }]
+        }, {
+          featureType: 'road',
+          stylers: [{
+            lightness: 25
+          }]
+        }, {
+          featureType: 'poi.park',
+          elementType: 'geometry',
+          stylers: [{
+            lightness: 20
+          }]
+        }];
 
         var map = new google.maps.Map(document.getElementById('map_canvas'), {
-          center: new google.maps.LatLng(37.3860517, -122.0838511),
+          center: new google.maps.LatLng(37.3860517, - 122.0838511),
           zoom: 17,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           styles: mapStyle
@@ -81,9 +77,8 @@
           markers = [];
           var bounds = new google.maps.LatLngBounds();
           for (var i = 0, place; place = places[i]; i++) {
-            var marker_image = new google.maps.MarkerImage(
-          'icons/marker_red.png',
-          new google.maps.Size(50, 50));
+            var marker_image = new google.maps.MarkerImage('icons/marker_red.png',
+            new google.maps.Size(50, 50));
 
             var marker = new google.maps.Marker({
               map: map,
@@ -124,11 +119,12 @@
       }
     </style>
   </head>
+
   <body>
     <div id="search-panel">
       <input id="target" type="text" placeholder="Search Box">
     </div>
     <div id="map_canvas"></div>
   </body>
-</html>
 
+</html>

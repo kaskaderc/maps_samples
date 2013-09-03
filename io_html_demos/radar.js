@@ -20,50 +20,44 @@ var heatmap;
  */
 function initialize() {
   var mapStyle = [{
-              stylers: [{
-                  visibility: 'off'
-                }, {
-                  saturation: -60
-                }, {
-                  lightness: -10
-                }
-              ]
-            }, {
-              featureType: 'road',
-              stylers: [{
-                  visibility: 'simplified'
-                }, {
-                  invert_lightness: true
-                }, {
-                  lightness: 75
-                }
-              ]
-            }, {
-              featureType: 'road.local',
-              stylers: [{
-                  visibility: 'simplified'
-                }, {
-                  lightness: 30
-                }
-              ]
-            }, {
-              featureType: 'landscape',
-              stylers: [{
-                  lightness: 100
-                }, {
-                  visibility: 'on'
-                }
-              ]
-            }, {
-              featureType: 'water',
-              stylers: [{
-                  color: 'grey'
-                }, {
-                  visibility: 'on'
-                }
-              ]
-            }
-          ];
+    stylers: [{
+      visibility: 'off'
+    }, {
+      saturation: -60
+    }, {
+      lightness: -10
+    }]
+  }, {
+    featureType: 'road',
+    stylers: [{
+      visibility: 'simplified'
+    }, {
+      invert_lightness: true
+    }, {
+      lightness: 75
+    }]
+  }, {
+    featureType: 'road.local',
+    stylers: [{
+      visibility: 'simplified'
+    }, {
+      lightness: 30
+    }]
+  }, {
+    featureType: 'landscape',
+    stylers: [{
+      lightness: 100
+    }, {
+      visibility: 'on'
+    }]
+  }, {
+    featureType: 'water',
+    stylers: [{
+      color: 'grey'
+    }, {
+      visibility: 'on'
+    }]
+  }];
 
   map = new google.maps.Map(document.getElementById('map_canvas'), {
     center: new google.maps.LatLng(-33.87, 151.205),
@@ -76,16 +70,7 @@ function initialize() {
   var controls = document.getElementById('controls');
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(controls);
 
-  var gradient = [
-    'rgba(67, 135, 253, 0)',
-    'rgba(67, 135, 253, 0.7)',
-    'rgba(13, 168, 97, 0.7)',
-    'rgba(255, 191, 127, 0.7)',
-    'rgba(255, 43, 72, 0.5)',
-    'rgba(255, 43, 72, 1)',
-    'rgba(222,0,30,0.5)',
-    'rgba(222,0,30,1)'
-  ];
+  var gradient = ['rgba(67, 135, 253, 0)', 'rgba(67, 135, 253, 0.7)', 'rgba(13, 168, 97, 0.7)', 'rgba(255, 191, 127, 0.7)', 'rgba(255, 43, 72, 0.5)', 'rgba(255, 43, 72, 1)', 'rgba(222,0,30,0.5)', 'rgba(222,0,30,1)'];
 
   heatmap = new google.maps.visualization.HeatmapLayer({
     map: map,
@@ -122,24 +107,24 @@ function performSearch(city) {
   var request = {};
 
   switch (city) {
-    case 'sydney':
-      map.setCenter(new google.maps.LatLng(-33.865, 151.205));
-      request.types = ['restaurant'];
-      request.keyword = 'view';
-      break;
-    case 'new york':
-      map.setCenter(new google.maps.LatLng(40.725, -74));
-      request.types = ['atm'];
-      break;
-    case 'san francisco':
-      map.setCenter(new google.maps.LatLng(37.785, -122.42));
-      request.keyword = 'francisco';
-      request.types = ['establishment'];
-      break;
-    case 'paris':
-      map.setCenter(new google.maps.LatLng(48.856667, 2.350833));
-      request.types = ['clothing_store'];
-      break;
+  case 'sydney':
+    map.setCenter(new google.maps.LatLng(-33.865, 151.205));
+    request.types = ['restaurant'];
+    request.keyword = 'view';
+    break;
+  case 'new york':
+    map.setCenter(new google.maps.LatLng(40.725, - 74));
+    request.types = ['atm'];
+    break;
+  case 'san francisco':
+    map.setCenter(new google.maps.LatLng(37.785, - 122.42));
+    request.keyword = 'francisco';
+    request.types = ['establishment'];
+    break;
+  case 'paris':
+    map.setCenter(new google.maps.LatLng(48.856667, 2.350833));
+    request.types = ['clothing_store'];
+    break;
   }
 
   request.bounds = map.getBounds();
@@ -165,7 +150,9 @@ function performSearch(city) {
  * over time.
  */
 function fadeInHeatmap() {
-  heatmap.setOptions({opacity: opacity});
+  heatmap.setOptions({
+    opacity: opacity
+  });
   opacity += OPACITY_INCREMENT;
   if (opacity <= MAX_OPACITY) {
     window.setTimeout(fadeInHeatmap, FADE_IN_TIMEOUT);

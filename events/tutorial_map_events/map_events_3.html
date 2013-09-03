@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <meta charset="utf-8"> 
+    <title> 
+      Google Maps V3 API Sample #1 : Events for google.maps.Map 
+    </title> 
+    <style type="text/css"> 
+      body {
+       color: #585858;
+       font-family: sans-serif;
+      }
+      table {
+      border-spacing: 2px;
+      text-align: left;
+      }
+      #map-canvas {
+       width: 600px;
+       height: 400px;
+      }
+      #map {
+       float: left;
+       width: 650px;
+      }
+      #events {
+       overflow: hidden;
+      }
+    </style> 
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"> 
+    </script> 
+    <script type="text/javascript"> 
+    eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('5 g={\'I\':\'1 2 0 1u 1B E z.\',\'10\':\'1 2 0 3 r d 6.\',\'i\':\'1 2 0 4 q e 0 3 (N T 2 W i e a Z n 19).\',\'1c\':\'1 2 0 4 1f-q e 0 3. 1g 1t 0 i 8 1v 1w 1x, 1y 1A m 1K.\',\'1L\':\'1M 1 1P 0 4 1Q 0 3.\',\'1S\':\'1 2 0 4 1T l 0 3.\',\'J\':\'1 2 0 4 K l 0 3.\',\'L\':\'1 2 0 3 M d 6.\',\'w\':\'1 2 0 3 O w P Q n R.\',\'S\':\'1 2 0 k d 6.\',\'U\':\'1 V 0 4\\\'s h Y 1X 0 3 f.\',\'11\':\'1 2 0 4\\\'s h 12 0 3 f.\',\'14\':\'1 2 0 4\\\'s h 15 0 3 f.\',\'16\':\'1 2 0 17 18 z.\',\'o\':\'1a 1b p m 8 e 0 3 2 0 1d 6 1e: 9.7.8.p(3, \\\'o\\\') .\',\'1h\':\'1 2 0 1i 1j 8 1k 1 e 0 3 f.\',\'1l\':\'1 2 0 1m 1n E 1o 1p.\',\'1q\':\'1 2 0 3 1r d 6.\',\'1s\':\'1 2 0 3 t d 6.\'};u v(){j();5 a=x.y(\'3-1z\');5 b=A 9.7.1C(a,{r:A 9.7.1D(1E.1F,-1G.1H),t:13,k:9.7.1I.1J});B(C D g){1N(b,C)}}u j(){5 a=x.y(\'1O\');5 b=\'\';B(5 c D g){b+=\'<F 1R="\'+c+\'"> <G>\'+c+\'</G> <H> \'+g[c]+\'</H></F>\'}a.1U=b}9.7.8.1V(1W,\'X\',v);',62,122,'the|fired|when|map|user|var|changes|maps|event|google||||property|on|container|events|mouse|click|populateTable|mapTypeId|dragging|this|or|resize|trigger|clicks|center||zoom|function|initialize|idle|document|getElementById|changed|new|for|eventName|in|have|tr|th|td|bounds_changed|dragstart|starts|heading_changed|heading|but|becomes|after|panning|zooming|maptypeid_changed|not|mousemove|whenever|they|load|moves|marker|center_changed|mouseout|exits||mouseover|enters|projection_changed|projection|has|infowindow|Developers|should|dblclick|div|size|double|Note|rightclick|DOM|contextmenu|is|tilesloaded|visible|tiles|finished|loading|tilt_changed|tilt|zoom_changed|that|viewport|will|also|fire|right|canvas|before|bounds|Map|LatLng|37|4419|122|1419|MapTypeId|ROADMAP|one|drag|repeatedly|setupListener|event_descr|while|drags|id|dragend|stops|innerHTML|addDomListener|window|over'.split('|'),0,{}))
+    </script> 
+  </head> 
+  <body> 
+    <div id="main"> 
+       <p>
+        For more information check
+      <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html#Map">the API reference</a>.
+      </p> 
+      <div id="map"> 
+        <h2> 
+          Map
+        </h2> 
+        <div id="map-canvas"> 
+        </div> 
+      </div> 
+      <div id="events"> 
+        <h2> 
+          Events
+        </h2> 
+        <table width="100%" id="event_descr"> 
+        </table> 
+      </div> 
+    </div> 
+    </div> 
+  </body> 
+</html>
