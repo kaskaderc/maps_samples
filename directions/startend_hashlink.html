@@ -1,0 +1,113 @@
+<html>
+
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Directions service persistend link WIP</title>
+    <style>
+      html, body {
+        font-family: Georgia, Times, 'Times New Roman', serif;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map-canvas, #map_canvas {
+        height: 100%;
+      }
+      @media print {
+        html, body {
+          height: auto;
+        }
+        #map-canvas, #map_canvas {
+          height: 650px;
+        }
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      var directionsDisplay;
+      var directionsService = new google.maps.DirectionsService();
+      var map;
+
+      function stringToLatLng(llstr) {
+        // String should be lat, lng
+        var latstr = llstr.substring(0, llstr.indexOf(","));
+        var lngstr = llstr.substring(llstr.indexOf(",") + 1);
+        if (parseFloat(latstr) && parseFloat(lngstr)) {
+          return new google.maps.LatLng(latstr, lngstr);
+        }
+        return null;
+      }
+
+      function initialize() {
+        hash = window.location.hash;
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var start = new google.maps.LatLng(41.850033, - 87.6500523);
+        var mapOptions = {
+          zoom: 7,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: start
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        directionsDisplay.setMap(map);
+        if (hash) {
+          var params = hash.substring(1).split('&');
+          var se = {};
+          for (var i in params) {
+            se[params[i].substring(0, params[i].indexOf('='))] = params[i].substring(params[i].indexOf('=') + 1);
+          }
+          if (se.start) {
+            document.getElementById('start').value = se.start;
+          }
+          if (se.end) {
+            document.getElementById('end').value = se.end;
+          }
+        }
+        calcRoute();
+      }
+
+      function calcRoute() {
+        var start = stringToLatLng(document.getElementById('start').value);
+        var end = stringToLatLng(document.getElementById('end').value);
+        if (start && end) {
+          var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+          };
+          directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              directionsDisplay.setDirections(response);
+            }
+          });
+        }
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+
+  <body>
+    <div id="panel">
+      <b>From:</b>
+      <input type="text" id="start" placeholder="start LatLng here"
+      value="41.850033, -87.6500523">
+      <b>To:</b>
+      <input type="text" id="end" placeholder="end LatLng here" value="41.852757,-87.643788">
+      <button type="button" onclick="calcRoute();">Get directions</button>
+      <a href="#end=54.342598,18.364921&start=54.34231,18.364881">sample persistent link</a>
+    </div>
+    <div id="map-canvas"></div>
+  </body>
+
+</html>
